@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      home: MyHomePage(title: 'Flutter Animations'),
+      home: MyHomePage(title: 'AnimatedPositioned'),
     );
   }
 }
@@ -28,18 +28,35 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  double _left = 0.0;
+
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: Center(
-        child: Dashatar(),
+        child: Container(
+          height: 200.0,
+          child: Stack(
+            children: [
+              AnimatedPositioned(
+                left: _left,
+                duration: const Duration(seconds: 1),
+                child: Dashatar(),
+              ),
+            ],
+          ),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          setState(() {});
+          setState(() {
+            _left = _left > 0.0 ? 0.0 : size.width - 200.0;
+          });
         },
         child: Icon(Icons.play_arrow),
       ),
