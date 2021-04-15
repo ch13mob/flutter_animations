@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      home: MyHomePage(title: 'Flutter Animations'),
+      home: MyHomePage(title: 'AnimatedOpacity'),
     );
   }
 }
@@ -28,6 +28,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool _isTransparent = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,11 +37,17 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Dashatar(),
+        child: AnimatedOpacity(
+          opacity: _isTransparent ? 0.0 : 1.0,
+          duration: const Duration(seconds: 1),
+          child: Dashatar(),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          setState(() {});
+          setState(() {
+            _isTransparent = !_isTransparent;
+          });
         },
         child: Icon(Icons.play_arrow),
       ),
