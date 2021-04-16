@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      home: MyHomePage(title: 'Flutter Animations'),
+      home: MyHomePage(title: 'AnimatedContainer'),
     );
   }
 }
@@ -28,6 +28,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool _isChecked = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,11 +37,18 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Dashatar(),
+        child: AnimatedContainer(
+          width: _isChecked ? 50.0 : 300.0,
+          height: _isChecked ? 300.0 : 50.0,
+          color: _isChecked ? Colors.blue : Colors.orange,
+          duration: const Duration(seconds: 1),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          setState(() {});
+          setState(() {
+            _isChecked = !_isChecked;
+          });
         },
         child: Icon(Icons.play_arrow),
       ),
