@@ -34,14 +34,59 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Dashatar(),
+      body: GridView.builder(
+        gridDelegate:
+            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+        itemBuilder: (_, index) => Hero(
+          tag: index.toString(),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  transitionDuration: Duration(seconds: 1),
+                  pageBuilder: (_, __, ___) =>
+                      HeroDetail(tag: index.toString()),
+                ),
+              );
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.white,
+                ),
+              ),
+              child: Dashatar(),
+            ),
+          ),
+        ),
+        itemCount: 21,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {});
-        },
-        child: Icon(Icons.play_arrow),
+    );
+  }
+}
+
+class HeroDetail extends StatelessWidget {
+  final String tag;
+
+  const HeroDetail({Key key, this.tag}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Detail screen"),
+      ),
+      body: Align(
+        alignment: Alignment.topCenter,
+        child: Container(
+          width: 300.0,
+          height: 300.0,
+          child: Hero(
+            tag: tag,
+            child: Dashatar(),
+          ),
+        ),
       ),
     );
   }
