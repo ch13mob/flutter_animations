@@ -27,7 +27,25 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage>
+    with SingleTickerProviderStateMixin {
+  AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,13 +53,29 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Dashatar(),
+        child: Container(
+          child: Stack(
+            children: [
+              RotationTransition(
+                turns: _controller,
+                child: Dashatar(),
+              ),
+            ],
+          ),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          if (_controller.isAnimating) {
+            _controller.stop();
+          } else {
+            _controller.repeat();
+          }
+
           setState(() {});
         },
-        child: Icon(Icons.play_arrow),
+        child:
+            _controller.isAnimating ? Icon(Icons.stop) : Icon(Icons.play_arrow),
       ),
     );
   }
