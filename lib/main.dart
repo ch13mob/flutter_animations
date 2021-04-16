@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animations/dashatar.dart';
+import 'package:lottie/lottie.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      home: MyHomePage(title: 'Flutter Animations'),
+      home: MyHomePage(title: 'Lottie Animations'),
     );
   }
 }
@@ -35,13 +36,49 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Dashatar(),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            MaterialButton(
+              height: 50.0,
+              minWidth: 200.0,
+              onPressed: () {
+                _showAnimation('assets/gift.json');
+              },
+              color: Theme.of(context).primaryColor,
+              child: Text('Gift'),
+            ),
+            SizedBox(height: 20.0),
+            MaterialButton(
+              height: 50.0,
+              minWidth: 200.0,
+              onPressed: () {
+                _showAnimation('assets/emoji.json');
+              },
+              color: Theme.of(context).primaryColor,
+              child: Text('Emoji'),
+            ),
+            SizedBox(height: 20.0),
+            MaterialButton(
+              height: 50.0,
+              minWidth: 200.0,
+              onPressed: () {
+                _showAnimation('assets/favorite.json');
+              },
+              color: Theme.of(context).primaryColor,
+              child: Text('Favorite'),
+            ),
+          ],
+        ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {});
-        },
-        child: Icon(Icons.play_arrow),
+    );
+  }
+
+  _showAnimation(String animationAsset) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        content: Lottie.asset(animationAsset),
       ),
     );
   }
