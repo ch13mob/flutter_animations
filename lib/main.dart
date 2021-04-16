@@ -28,6 +28,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final _colorTween = ColorTween(begin: Colors.blue, end: Colors.orange);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +37,17 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Dashatar(),
+        child: TweenAnimationBuilder(
+          tween: _colorTween,
+          duration: const Duration(seconds: 2),
+          builder: (_, Color colorValue, Widget child) {
+            return Container(
+              width: 200.0,
+              height: 200.0,
+              color: colorValue,
+            );
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
